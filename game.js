@@ -96,11 +96,20 @@ function cropSymbol(kind) {
 
 function seedBagIcon(kind) {
   return svgIcon(`
-    <path d="M19 24c0-7 6-12 13-12s13 5 13 12l4 25c1 5-3 8-8 8H23c-5 0-9-3-8-8l4-25z" fill="#c69a61"/>
-    <path d="M22 23c5 3 15 3 20 0" stroke="#8b643b" stroke-width="4" stroke-linecap="round"/>
-    <rect x="21" y="29" width="22" height="19" rx="6" fill="#fff2d5" opacity=".88"/>
-    <g transform="translate(8 8) scale(.74)">${cropSymbol(kind)}</g>
-  `);
+    <defs>
+      <linearGradient id="bag-${kind}" x1="18" x2="48" y1="12" y2="57" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#e7c184"/>
+        <stop offset="1" stop-color="#b97843"/>
+      </linearGradient>
+    </defs>
+    <path d="M22 18c2-6 7-9 10-9s8 3 10 9c5 6 8 20 8 31 0 6-4 9-10 9H24c-6 0-10-3-10-9 0-11 3-25 8-31z" fill="url(#bag-${kind})"/>
+    <path d="M22 19c6 4 14 4 20 0" stroke="#895b34" stroke-width="4" stroke-linecap="round"/>
+    <path d="M18 49c5 4 23 5 29 0" stroke="#9b6339" stroke-width="3" stroke-linecap="round" opacity=".45"/>
+    <rect x="20" y="28" width="24" height="21" rx="7" fill="#fff1cf"/>
+    <rect x="22" y="30" width="20" height="17" rx="5" fill="#fff8e7"/>
+    <path d="M23 16c3 2 15 2 18 0" stroke="#f0d39f" stroke-width="2" stroke-linecap="round"/>
+    <g transform="translate(12 12) scale(.62)">${cropSymbol(kind)}</g>
+  `, "item-svg-icon seed-bag-icon");
 }
 
 function renderIcon(iconKey = "unknown") {
@@ -112,13 +121,13 @@ function renderIcon(iconKey = "unknown") {
     tomato: svgIcon(cropSymbol("tomato")),
     corn: svgIcon(cropSymbol("corn")),
     strawberry: svgIcon(cropSymbol("strawberry")),
-    egg: svgIcon(`<ellipse cx="32" cy="34" rx="14" ry="18" fill="#fff8e6"/><path d="M23 40c6 5 14 6 22 0" stroke="#e6dcc2" stroke-width="3" stroke-linecap="round"/>`),
-    milk: svgIcon(`<path d="M25 10h14v9l5 8v25c0 4-3 7-7 7H27c-4 0-7-3-7-7V27l5-8V10z" fill="#f9fbf1"/><path d="M25 10h14v9H25z" fill="#8fd3e8"/><path d="M22 34h20v12H22z" fill="#b8e6f1"/><path d="M27 50h10" stroke="#d7decf" stroke-width="3" stroke-linecap="round"/>`),
-    wood: svgIcon(`<path d="M13 40l29-22c5-4 13 6 8 10L22 51c-6 4-14-7-9-11z" fill="#9b6339"/><circle cx="17" cy="45" r="8" fill="#c89158"/><circle cx="17" cy="45" r="4" fill="#8a5835"/>`),
-    stone: svgIcon(`<path d="M16 43l8-19 18-8 13 17-8 17H24z" fill="#b9b6a1"/><path d="M24 24l9 8 9-16" stroke="#8e8d81" stroke-width="3" stroke-linecap="round"/>`),
-    hay: svgIcon(`<path d="M18 45c5-15 7-25 4-35M32 48c3-16 4-28 1-38M46 45c-4-15-5-25-2-35" stroke="#d7af3a" stroke-width="4" stroke-linecap="round"/><path d="M13 45h38" stroke="#b98a2f" stroke-width="5" stroke-linecap="round"/>`),
-    path: svgIcon(`<path d="M14 45h36v9H14z" fill="#a7a78f"/><path d="M18 35h12v8H18zM34 31h12v10H34zM24 20h14v9H24z" fill="#c5c3aa"/>`),
-    fence: svgIcon(`<path d="M18 12h8v40h-8zM38 12h8v40h-8z" fill="#9b6034"/><path d="M12 25h40v7H12zM12 39h40v7H12z" fill="#b97942"/>`),
+    egg: svgIcon(`<ellipse cx="32" cy="35" rx="15" ry="18" fill="#fff8e6"/><ellipse cx="28" cy="29" rx="5" ry="7" fill="#ffffff" opacity=".75"/><path d="M22 42c7 5 16 6 23 0" stroke="#e4d8bd" stroke-width="3" stroke-linecap="round"/>`),
+    milk: svgIcon(`<path d="M24 9h16v9l5 9v24c0 5-3 8-8 8H27c-5 0-8-3-8-8V27l5-9V9z" fill="#fffaf0"/><path d="M24 9h16v10H24z" fill="#8fd3e8"/><path d="M22 33h21v14H22z" fill="#b8e6f1"/><path d="M25 37h15" stroke="#fff8e7" stroke-width="3" stroke-linecap="round"/><path d="M27 52h10" stroke="#d7decf" stroke-width="3" stroke-linecap="round"/>`),
+    wood: svgIcon(`<path d="M12 40l30-23c5-4 14 6 9 11L22 52c-6 4-15-7-10-12z" fill="#9b6339"/><path d="M20 39l25-19" stroke="#c89158" stroke-width="3" stroke-linecap="round"/><circle cx="17" cy="45" r="9" fill="#c89158"/><circle cx="17" cy="45" r="5" fill="#8a5835"/><circle cx="17" cy="45" r="2" fill="#dba86c"/>`),
+    stone: svgIcon(`<path d="M15 43l8-19 18-8 14 17-8 18H24z" fill="#b9b6a1"/><path d="M24 25l9 8 10-16" stroke="#8e8d81" stroke-width="3" stroke-linecap="round"/><path d="M25 47h20" stroke="#d5d1ba" stroke-width="3" stroke-linecap="round" opacity=".7"/>`),
+    hay: svgIcon(`<path d="M18 45c5-15 7-25 4-35M32 48c3-16 4-28 1-38M46 45c-4-15-5-25-2-35" stroke="#d7af3a" stroke-width="4" stroke-linecap="round"/><path d="M16 36h32" stroke="#efcf63" stroke-width="4" stroke-linecap="round"/><path d="M13 45h38" stroke="#b98a2f" stroke-width="5" stroke-linecap="round"/>`),
+    path: svgIcon(`<path d="M13 45h38v9H13z" fill="#9c9d87"/><path d="M17 35h13v8H17zM34 31h13v10H34zM24 20h15v9H24z" fill="#c5c3aa"/><path d="M20 38h7M37 35h7M27 24h9" stroke="#e1dec5" stroke-width="2" stroke-linecap="round"/>`),
+    fence: svgIcon(`<path d="M17 12h9v41h-9zM38 12h9v41h-9z" fill="#9b6034"/><path d="M12 25h40v8H12zM12 39h40v8H12z" fill="#b97942"/><path d="M19 15l3-5 3 5M40 15l3-5 3 5" fill="#c89158"/><path d="M17 29h30M17 43h30" stroke="#d69b62" stroke-width="2" stroke-linecap="round"/>`),
     food_omelet: svgIcon(`<ellipse cx="32" cy="38" rx="21" ry="12" fill="#f7d46a"/><circle cx="27" cy="35" r="5" fill="#fff8df"/><circle cx="27" cy="35" r="2.5" fill="#f0b83c"/><path d="M15 46h34" stroke="#d99b44" stroke-width="4" stroke-linecap="round"/>`),
     food_hot_milk: svgIcon(`<rect x="20" y="17" width="24" height="34" rx="8" fill="#fff8e7"/><path d="M24 17h16v9H24z" fill="#8fd3e8"/><path d="M22 34h20" stroke="#d7decf" stroke-width="4"/><path d="M23 13c-2-5 4-6 2-10M33 13c-2-5 4-6 2-10M43 13c-2-5 4-6 2-10" stroke="#b7b0a1" stroke-width="3" stroke-linecap="round"/>`),
     food_soup: svgIcon(`<path d="M16 31h32c-1 13-7 20-16 20s-15-7-16-20z" fill="#f0a35a"/><path d="M14 30c5-5 31-5 36 0" stroke="#c8743e" stroke-width="5" stroke-linecap="round"/><circle cx="26" cy="37" r="3" fill="#f6d17a"/><circle cx="36" cy="39" r="3" fill="#e86a4e"/><path d="M21 51h22" stroke="#8f6443" stroke-width="4" stroke-linecap="round"/>`),
@@ -261,6 +270,8 @@ let autoPath = [];
 let zoom = 1;
 let sunLight;
 let hemiLight;
+let sustainedMoveDirection = null;
+let sustainedMoveTime = 0;
 
 const interiorDevDefaults = {
   counterPeninsulaX: 0.86,
@@ -710,6 +721,19 @@ function normalizeState() {
   state.calendar.year = Math.max(1, Number(state.calendar.year) || 1);
   state.player = { ...defaults.player, ...(state.player || {}) };
   if (!Array.isArray(state.animals)) state.animals = defaults.animals;
+  state.animals = state.animals.map((animal, index) => ({
+    id: animal.id || `animal${index}`,
+    type: animal.type === "cow" ? "cow" : "chicken",
+    x: Number.isFinite(Number(animal.x)) ? Number(animal.x) : (animal.type === "cow" ? 4.7 : 5.3),
+    z: Number.isFinite(Number(animal.z)) ? Number(animal.z) : (animal.type === "cow" ? 1.45 : -1.6),
+    homeX: Number.isFinite(Number(animal.homeX)) ? Number(animal.homeX) : (Number.isFinite(Number(animal.x)) ? Number(animal.x) : (animal.type === "cow" ? 4.7 : 5.3)),
+    homeZ: Number.isFinite(Number(animal.homeZ)) ? Number(animal.homeZ) : (Number.isFinite(Number(animal.z)) ? Number(animal.z) : (animal.type === "cow" ? 1.45 : -1.6)),
+    petted: Boolean(animal.petted),
+    productReady: Boolean(animal.productReady),
+    sad: Boolean(animal.sad),
+    wanderTimer: Number.isFinite(Number(animal.wanderTimer)) ? Math.max(0, Number(animal.wanderTimer)) : 1 + stableNumber(`${animal.id || index}:idle`, 0, 2),
+    wanderTarget: animal.wanderTarget || null,
+  }));
   if (!Array.isArray(state.crops)) state.crops = defaults.crops;
   state.inventory = Array.from({ length: 8 }, (_, index) => normalizeStack(state.inventory?.[index] || null));
   state.chest = (state.chest || []).map(normalizeStack).filter(Boolean);
@@ -1112,80 +1136,291 @@ function objectModel(obj) {
       g.add(sill);
     }
   } else if (obj.type === "phone") {
-    const body = box(0.48, 0.95, 0.42, 0x62a6d3);
-    body.position.y = 0.48;
+    const base = box(0.56, 0.08, 0.5, 0x3f7fa6, { outline: false });
+    base.position.y = 0.04;
+    g.add(base);
+    const body = box(0.48, 0.96, 0.36, 0x55a4d5);
+    body.position.y = 0.52;
     g.add(body);
-    const top = box(0.58, 0.16, 0.5, 0xffe38b);
-    top.position.y = 1.02;
+    const back = box(0.52, 1.08, 0.08, 0x3d83b4, { outline: false });
+    back.position.set(0, 0.58, -0.2);
+    g.add(back);
+    for (const x of [-0.31, 0.31]) {
+      const post = box(0.08, 1.08, 0.08, 0x37769d);
+      post.position.set(x, 0.58, 0.02);
+      g.add(post);
+    }
+    const top = box(0.72, 0.16, 0.56, 0xffdb78);
+    top.position.set(0, 1.16, -0.02);
     g.add(top);
-    const screen = box(0.32, 0.22, 0.035, 0xf6f2d5, { outline: false });
-    screen.position.set(0, 0.68, -0.23);
+    const hoodLip = box(0.78, 0.08, 0.16, 0xe7b956, { outline: false });
+    hoodLip.position.set(0, 1.06, 0.28);
+    g.add(hoodLip);
+    const sign = box(0.38, 0.12, 0.035, 0xf7f0cf, { outline: false });
+    sign.position.set(0, 1.16, 0.31);
+    g.add(sign);
+    const phoneMark = box(0.18, 0.035, 0.02, 0x2f5f82, { outline: false });
+    phoneMark.position.set(0, 1.16, 0.335);
+    g.add(phoneMark);
+    const frontPanel = box(0.36, 0.58, 0.045, 0x2f6f99, { outline: false });
+    frontPanel.position.set(0, 0.67, 0.205);
+    g.add(frontPanel);
+    const screen = box(0.25, 0.12, 0.025, 0xdaf1e9, { outline: false });
+    screen.position.set(0, 0.88, 0.235);
     g.add(screen);
-    const handset = box(0.36, 0.08, 0.08, 0x426f98);
-    handset.position.set(0, 0.86, -0.26);
+    const dial = cylinder(0.095, 0.035, 0xffe7a2, 16);
+    dial.rotation.x = Math.PI / 2;
+    dial.position.set(0, 0.62, 0.24);
+    g.add(dial);
+    for (const x of [-0.08, 0, 0.08]) {
+      for (const y of [0.47, 0.53]) {
+        const key = box(0.035, 0.025, 0.018, 0xf8e9bd, { outline: false });
+        key.position.set(x, y, 0.245);
+        g.add(key);
+      }
+    }
+    const cord = cylinder(0.012, 0.24, 0x203f58, 6);
+    cord.rotation.z = 0.35;
+    cord.position.set(-0.12, 0.76, 0.245);
+    g.add(cord);
+    const handset = box(0.3, 0.075, 0.075, 0x1f4868);
+    handset.position.set(-0.01, 0.78, 0.255);
     handset.rotation.z = -0.15;
     g.add(handset);
-  } else if (obj.type.includes("Box") || obj.type === "chest") {
-    const b = box(0.62, 0.42, 0.52, obj.type === "recipeBox" ? 0x8f75c9 : obj.type === "ingredientBox" ? 0xd7a85a : obj.type === "seedBox" ? 0xba8448 : 0x9a6a35, { texture: "wood" });
-    b.position.y = 0.21;
-    g.add(b);
-    const lid = box(0.68, 0.12, 0.56, obj.type === "chest" ? 0x7a4b2a : 0xffe4aa, { texture: obj.type === "chest" ? "wood" : "" });
+  } else if (obj.type === "chest") {
+    const body = box(0.76, 0.36, 0.52, 0x8a5630, { texture: "wood" });
+    body.position.y = 0.2;
+    g.add(body);
+    const lid = box(0.82, 0.18, 0.58, 0x6f3f24, { texture: "wood" });
     lid.position.y = 0.48;
     g.add(lid);
-    const badgeColor = obj.type === "recipeBox" ? 0xfff3ce : obj.type === "ingredientBox" ? 0x7dc06b : obj.type === "seedBox" ? 0x6abf63 : 0xf0cc65;
-    const badge = sphere(0.11, badgeColor, 8, 5);
-    badge.scale.set(1, 0.18, 1);
-    badge.position.set(0, 0.51, -0.29);
-    g.add(badge);
-  } else if (obj.type === "saleCrate") {
-    const crate = box(0.72, 0.36, 0.62, 0xd56a58);
+    for (const x of [-0.28, 0.28]) {
+      const band = box(0.07, 0.58, 0.62, 0x4b3a32, { outline: false });
+      band.position.set(x, 0.33, 0);
+      g.add(band);
+    }
+    const lock = box(0.16, 0.18, 0.045, 0xf0c45f, { outline: false });
+    lock.position.set(0, 0.32, -0.29);
+    g.add(lock);
+    const shine = box(0.34, 0.035, 0.04, 0xb97842, { outline: false });
+    shine.position.set(0, 0.59, -0.2);
+    g.add(shine);
+  } else if (obj.type.includes("Box")) {
+    const colors = {
+      seedBox: { body: 0xd8a05e, lid: 0xf3d394, accent: 0x69b65f },
+      ingredientBox: { body: 0xc98b4a, lid: 0xf5e1b3, accent: 0xe36d5a },
+      recipeBox: { body: 0x8f75c9, lid: 0xe9defb, accent: 0xfff3ce },
+    }[obj.type] || { body: 0xba8448, lid: 0xffe4aa, accent: 0xf0cc65 };
+    const crate = box(0.62, 0.34, 0.52, colors.body, { texture: "wood" });
     crate.position.y = 0.18;
     g.add(crate);
-    for (const x of [-0.24, 0.24]) {
-      const slat = box(0.08, 0.42, 0.66, 0xef937b, { outline: false });
-      slat.position.set(x, 0.24, 0);
+    const lid = box(0.7, 0.09, 0.58, colors.lid);
+    lid.position.y = 0.42;
+    g.add(lid);
+    for (const x of [-0.23, 0.23]) {
+      const strap = box(0.055, 0.39, 0.58, 0x8b6138, { outline: false });
+      strap.position.set(x, 0.24, 0);
+      g.add(strap);
+    }
+    const badge = box(0.26, 0.18, 0.04, colors.accent, { outline: false });
+    badge.position.set(0, 0.3, -0.285);
+    g.add(badge);
+    if (obj.type === "seedBox") {
+      const leaf = sphere(0.08, 0x5faf55, 8, 5);
+      leaf.scale.set(1.4, 0.18, 0.75);
+      leaf.position.set(0.02, 0.48, -0.18);
+      leaf.rotation.z = -0.45;
+      g.add(leaf);
+      const seed = sphere(0.06, 0x8a5630, 8, 5);
+      seed.scale.set(1, 0.32, 0.75);
+      seed.position.set(-0.11, 0.49, -0.08);
+      g.add(seed);
+    } else if (obj.type === "ingredientBox") {
+      for (const x of [-0.12, 0.08]) {
+        const produce = sphere(0.09, x < 0 ? 0xf06f56 : 0xf2c65a, 10, 6);
+        produce.scale.set(1, 0.75, 1);
+        produce.position.set(x, 0.49, -0.08);
+        g.add(produce);
+      }
+      const leaf = box(0.16, 0.03, 0.06, 0x5fac63, { outline: false });
+      leaf.position.set(0.02, 0.57, -0.08);
+      leaf.rotation.z = 0.3;
+      g.add(leaf);
+    } else if (obj.type === "recipeBox") {
+      const paperA = box(0.34, 0.035, 0.25, 0xfff8df, { outline: false });
+      paperA.position.set(-0.03, 0.49, -0.06);
+      paperA.rotation.y = -0.18;
+      g.add(paperA);
+      const ribbon = box(0.04, 0.05, 0.28, 0xc96a50, { outline: false });
+      ribbon.position.set(-0.03, 0.53, -0.06);
+      g.add(ribbon);
+    }
+  } else if (obj.type === "saleCrate") {
+    const base = box(0.82, 0.32, 0.56, 0xb86b3d, { receiveShadow: false });
+    base.position.y = 0.23;
+    g.add(base);
+    for (const x of [-0.3, 0.3]) {
+      for (const z of [-0.22, 0.22]) {
+        const foot = box(0.12, 0.12, 0.12, 0x704228, { outline: false });
+        foot.position.set(x, 0.095, z);
+        g.add(foot);
+      }
+    }
+    const frontBacker = box(0.88, 0.36, 0.055, 0x8d5232, { outline: false, receiveShadow: false });
+    frontBacker.position.set(0, 0.28, 0.37);
+    g.add(frontBacker);
+    for (const y of [0.2, 0.32, 0.44]) {
+      const slat = box(0.9, 0.07, 0.07, 0xe2995f, { outline: false, receiveShadow: false });
+      slat.position.set(0, y, 0.43);
       g.add(slat);
     }
-    const cloth = box(0.5, 0.04, 0.28, 0xffe2a8, { outline: false });
-    cloth.position.set(0, 0.4, -0.03);
-    g.add(cloth);
+    for (const x of [-0.37, 0.37]) {
+      const side = box(0.075, 0.44, 0.08, 0x704228, { outline: false, receiveShadow: false });
+      side.position.set(x, 0.31, 0.435);
+      g.add(side);
+    }
+    const produceA = sphere(0.11, 0xe85f4d, 10, 6);
+    produceA.scale.set(1, 0.65, 1);
+    produceA.position.set(-0.16, 0.5, -0.05);
+    g.add(produceA);
+    const produceB = sphere(0.1, 0xf4ca63, 10, 6);
+    produceB.scale.set(1, 0.65, 1);
+    produceB.position.set(0.08, 0.49, 0.08);
+    g.add(produceB);
+    const tag = box(0.3, 0.18, 0.035, 0xfff0bd, { outline: false });
+    tag.position.set(0, 0.36, 0.49);
+    g.add(tag);
+    const mark = box(0.18, 0.035, 0.02, 0x7b4d2a, { outline: false });
+    mark.position.set(0, 0.37, 0.515);
+    g.add(mark);
   } else if (obj.type === "coop") {
-    g.add(box(1.1, 0.74, 0.9, 0xd9a04d, { texture: "wood" }));
-    g.children[0].position.y = 0.37;
-    const roof = cone(0.82, 0.5, 0xb75543, 4);
-    roof.position.y = 0.98;
-    roof.rotation.y = Math.PI / 4;
-    g.add(roof);
-    const hatch = box(0.34, 0.38, 0.06, 0x7a4b2a);
-    hatch.position.set(0, 0.3, -0.48);
-    g.add(hatch);
-    const perch = cylinder(0.035, 0.86, 0x9b6034, 8);
-    perch.rotation.z = Math.PI / 2;
-    perch.position.set(0, 0.58, -0.52);
-    g.add(perch);
-  } else if (obj.type === "cowBarn") {
-    g.add(box(1.35, 0.88, 1.05, 0xc96a50, { texture: "wood" }));
-    g.children[0].position.y = 0.44;
-    const roof = cone(0.98, 0.55, 0x8f4939, 4);
-    roof.position.y = 1.14;
-    roof.rotation.y = Math.PI / 4;
-    g.add(roof);
-    const doorL = box(0.32, 0.54, 0.06, 0x7a4b2a, { texture: "wood" });
-    doorL.position.set(-0.18, 0.3, -0.56);
-    g.add(doorL);
-    const doorR = box(0.32, 0.54, 0.06, 0x8b5934, { texture: "wood" });
-    doorR.position.set(0.18, 0.3, -0.56);
-    g.add(doorR);
-    const hay = cone(0.18, 0.28, 0xf1c85a, 6);
-    hay.position.set(-0.5, 0.18, 0.38);
-    g.add(hay);
-  } else if (obj.type === "silo") {
-    const body = cylinder(0.38, 1.3, 0xcbd8d1, 12);
-    body.position.y = 0.65;
+    const platform = box(1.18, 0.12, 0.9, 0x8f5a34, { texture: "wood" });
+    platform.position.y = 0.13;
+    g.add(platform);
+    for (const x of [-0.46, 0.46]) {
+      for (const z of [-0.32, 0.32]) {
+        const leg = box(0.1, 0.32, 0.1, 0x7b4d2a, { texture: "wood" });
+        leg.position.set(x, 0.16, z);
+        g.add(leg);
+      }
+    }
+    const body = box(0.98, 0.7, 0.72, 0xd99a4a, { texture: "wood" });
+    body.position.y = 0.56;
     g.add(body);
-    const roof = cone(0.43, 0.34, 0xd4634e, 12);
-    roof.position.y = 1.48;
+    const frontPanel = box(0.82, 0.54, 0.045, 0xc5793d, { texture: "wood" });
+    frontPanel.position.set(0, 0.54, 0.39);
+    g.add(frontPanel);
+    const frontTrim = box(1.08, 0.08, 0.07, 0xffdf96, { outline: false });
+    frontTrim.position.set(0, 0.92, 0.4);
+    g.add(frontTrim);
+    const roof = cone(0.82, 0.46, 0xb94f3f, 4);
+    roof.position.y = 1.13;
+    roof.rotation.y = Math.PI / 4;
     g.add(roof);
+    const roofCap = box(1.28, 0.08, 0.1, 0xffd18a, { outline: false });
+    roofCap.position.set(0, 1.21, 0.02);
+    roofCap.rotation.y = Math.PI / 4;
+    g.add(roofCap);
+    const hatch = box(0.3, 0.38, 0.07, 0x6f4428, { texture: "wood" });
+    hatch.position.set(0, 0.46, 0.44);
+    g.add(hatch);
+    const hatchTop = cone(0.17, 0.13, 0xffdf96, 3);
+    hatchTop.position.set(0, 0.7, 0.48);
+    hatchTop.rotation.x = Math.PI / 2;
+    g.add(hatchTop);
+    for (const x of [-0.26, 0.26]) {
+      const window = box(0.16, 0.16, 0.045, 0xffedba, { outline: false });
+      window.position.set(x, 0.68, 0.445);
+      g.add(window);
+      const bar = box(0.12, 0.035, 0.055, 0x8b5a35, { outline: false });
+      bar.position.set(x, 0.68, 0.472);
+      g.add(bar);
+    }
+    const perch = cylinder(0.035, 0.9, 0x9b6034, 8);
+    perch.rotation.z = Math.PI / 2;
+    perch.position.set(0, 0.34, 0.52);
+    g.add(perch);
+    const nestBox = box(0.34, 0.28, 0.34, 0xc47b3d, { texture: "wood" });
+    nestBox.position.set(-0.58, 0.46, 0.02);
+    g.add(nestBox);
+    const nestRoof = box(0.42, 0.08, 0.38, 0xb94f3f, { outline: false });
+    nestRoof.position.set(-0.58, 0.64, 0.02);
+    g.add(nestRoof);
+  } else if (obj.type === "cowBarn") {
+    const floor = box(1.66, 0.1, 1.14, 0x8b5b38, { texture: "wood" });
+    floor.position.y = 0.08;
+    g.add(floor);
+    const backWall = box(1.48, 0.84, 0.14, 0xc96a50, { texture: "wood" });
+    backWall.position.set(0, 0.5, -0.45);
+    g.add(backWall);
+    for (const x of [-0.66, 0.66]) {
+      const post = box(0.13, 0.92, 0.13, 0x7a4b2a, { texture: "wood" });
+      post.position.set(x, 0.52, 0.4);
+      g.add(post);
+    }
+    for (const x of [-0.66, 0.66]) {
+      const rearPost = box(0.13, 0.92, 0.13, 0x7a4b2a, { texture: "wood" });
+      rearPost.position.set(x, 0.52, -0.42);
+      g.add(rearPost);
+    }
+    const sideRailL = box(0.12, 0.32, 0.9, 0x9f6138, { texture: "wood" });
+    sideRailL.position.set(-0.72, 0.42, 0.02);
+    g.add(sideRailL);
+    const sideRailR = box(0.12, 0.32, 0.9, 0x9f6138, { texture: "wood" });
+    sideRailR.position.set(0.72, 0.42, 0.02);
+    g.add(sideRailR);
+    const roof = cone(1.06, 0.58, 0x8f4939, 4);
+    roof.position.y = 1.18;
+    roof.rotation.y = Math.PI / 4;
+    g.add(roof);
+    const roofLip = box(1.64, 0.1, 0.16, 0xb75b45, { outline: false });
+    roofLip.position.set(0, 0.98, 0.52);
+    g.add(roofLip);
+    const beam = box(1.5, 0.12, 0.12, 0xffd18a, { outline: false });
+    beam.position.set(0, 0.86, 0.47);
+    g.add(beam);
+    const trough = box(0.78, 0.18, 0.28, 0x9b6034, { texture: "wood" });
+    trough.position.set(0, 0.2, 0.58);
+    g.add(trough);
+    const feed = box(0.66, 0.05, 0.18, 0xf1c85a, { outline: false });
+    feed.position.set(0, 0.32, 0.58);
+    g.add(feed);
+    const hay = cone(0.2, 0.32, 0xf1c85a, 6);
+    hay.position.set(-0.5, 0.26, -0.28);
+    g.add(hay);
+    const sign = box(0.42, 0.24, 0.045, 0xffdf96, { outline: false });
+    sign.position.set(0, 0.68, 0.61);
+    g.add(sign);
+    const mark = box(0.22, 0.04, 0.02, 0x7a4b2a, { outline: false });
+    mark.position.set(0, 0.69, 0.635);
+    g.add(mark);
+  } else if (obj.type === "silo") {
+    const base = cylinder(0.43, 0.12, 0xa98b68, 14);
+    base.position.y = 0.06;
+    g.add(base);
+    const body = cylinder(0.38, 1.28, 0xdce3d7, 14);
+    body.position.y = 0.72;
+    g.add(body);
+    for (const y of [0.34, 0.72, 1.08]) {
+      const band = cylinder(0.392, 0.045, 0x9fb1aa, 14);
+      band.position.y = y;
+      g.add(band);
+    }
+    const roof = cone(0.48, 0.38, 0xd4634e, 14);
+    roof.position.y = 1.55;
+    g.add(roof);
+    const cap = cylinder(0.16, 0.08, 0xf1d08d, 10);
+    cap.position.y = 1.78;
+    g.add(cap);
+    const hatch = box(0.24, 0.3, 0.035, 0xf3e1b0, { outline: false });
+    hatch.position.set(0, 0.7, -0.39);
+    g.add(hatch);
+    const hatchMark = box(0.15, 0.035, 0.02, 0x8f724d, { outline: false });
+    hatchMark.position.set(0, 0.72, -0.415);
+    g.add(hatchMark);
+    const hayCue = cone(0.13, 0.2, 0xf1c85a, 6);
+    hayCue.position.set(-0.3, 0.18, 0.32);
+    g.add(hayCue);
   } else if (obj.type === "workbenchBroken" || obj.type === "workbench") {
     const table = box(0.72, 0.28, 0.56, 0x795033, { texture: "wood" });
     table.position.y = 0.24;
@@ -1490,6 +1725,7 @@ function buildAnimals() {
     const group = animal.type === "chicken" ? makeChicken() : makeCow();
     group.position.set(animal.x, 0, animal.z);
     group.userData.animal = animal;
+    group.userData.targetRotationY = 0;
     world.add(group);
     objects.set(animal.id, group);
     collisions.push({ x: animal.x, z: animal.z, w: animal.type === "cow" ? 0.9 : 0.5, d: animal.type === "cow" ? 0.7 : 0.5, id: animal.id, animal: true });
@@ -1498,69 +1734,100 @@ function buildAnimals() {
 
 function makeChicken() {
   const g = new THREE.Group();
-  const body = sphere(0.34, palette.white, 12, 8);
-  body.scale.set(0.9, 0.78, 1.05);
-  body.position.y = 0.38;
+  const body = sphere(0.34, 0xfff7dc, 14, 9);
+  body.scale.set(0.95, 0.82, 1.08);
+  body.position.y = 0.36;
   g.add(body);
-  const head = sphere(0.22, palette.white, 12, 8);
-  head.position.set(0.02, 0.72, -0.24);
+  const chest = sphere(0.2, 0xffffff, 10, 6);
+  chest.scale.set(0.8, 0.55, 0.52);
+  chest.position.set(0, 0.37, 0.25);
+  g.add(chest);
+  const head = sphere(0.23, 0xfff7dc, 12, 8);
+  head.position.set(0.02, 0.69, 0.27);
   g.add(head);
-  const comb = sphere(0.085, palette.red, 8, 5);
-  comb.scale.set(0.9, 1.35, 0.7);
-  comb.position.set(0.02, 0.94, -0.25);
-  g.add(comb);
-  const beak = cone(0.07, 0.16, palette.gold, 4);
+  for (const x of [-0.055, 0, 0.055]) {
+    const comb = sphere(0.055, palette.red, 8, 5);
+    comb.scale.set(0.85, 1.32, 0.68);
+    comb.position.set(x, 0.91 + (x === 0 ? 0.04 : 0), 0.27);
+    g.add(comb);
+  }
+  const beak = cone(0.075, 0.18, palette.gold, 4);
   beak.rotation.x = Math.PI / 2;
-  beak.position.set(0.02, 0.72, -0.47);
+  beak.position.set(0.02, 0.69, 0.5);
   g.add(beak);
+  for (const x of [-0.07, 0.07]) {
+    const eye = sphere(0.025, 0x2d241d, 6, 4);
+    eye.position.set(x, 0.75, 0.46);
+    g.add(eye);
+  }
   for (const x of [-0.08, 0.08]) {
     const foot = box(0.08, 0.035, 0.16, 0xf2b23a, { outline: false });
-    foot.position.set(x, 0.06, 0.1);
+    foot.position.set(x, 0.055, -0.02);
     g.add(foot);
   }
-  const wing = sphere(0.16, 0xf5edd6, 8, 5);
-  wing.scale.set(0.55, 0.75, 1);
-  wing.position.set(-0.25, 0.38, 0.04);
-  g.add(wing);
+  for (const x of [-0.27, 0.27]) {
+    const wing = sphere(0.16, 0xf0e7ca, 8, 5);
+    wing.scale.set(0.55, 0.74, 1.04);
+    wing.position.set(x, 0.37, 0.02);
+    g.add(wing);
+  }
   return g;
 }
 
 function makeCow() {
   const g = new THREE.Group();
-  const body = sphere(0.42, palette.white, 12, 8);
-  body.scale.set(1.25, 0.72, 0.78);
-  body.position.y = 0.48;
+  const body = sphere(0.5, 0xf8f3df, 14, 9);
+  body.scale.set(1.42, 0.78, 0.88);
+  body.position.y = 0.5;
   g.add(body);
-  const head = sphere(0.24, palette.white, 12, 8);
-  head.position.set(0.5, 0.62, -0.05);
+  const head = sphere(0.28, 0xf8f3df, 12, 8);
+  head.scale.set(1.08, 0.96, 0.92);
+  head.position.set(0.62, 0.64, -0.03);
   g.add(head);
-  for (const [x, z] of [[-0.18, -0.24], [0.12, 0.21]]) {
-    const spot = sphere(0.11, palette.black, 8, 5);
-    spot.scale.set(1.3, 0.22, 0.75);
-    spot.position.set(x, 0.7, z);
+  for (const [x, z, sx, sz] of [[-0.28, -0.22, 1.55, 0.85], [0.1, 0.24, 1.2, 0.8], [0.42, -0.14, 0.9, 0.72]]) {
+    const spot = sphere(0.13, 0x2f2a27, 8, 5);
+    spot.scale.set(sx, 0.2, sz);
+    spot.position.set(x, 0.78, z);
     g.add(spot);
   }
-  const snout = sphere(0.13, 0xe8b8a7, 10, 6);
-  snout.scale.set(1.15, 0.75, 0.8);
-  snout.position.set(0.68, 0.56, -0.06);
+  const snout = sphere(0.15, 0xe9b6a6, 10, 6);
+  snout.scale.set(1.24, 0.78, 0.9);
+  snout.position.set(0.84, 0.55, -0.04);
   g.add(snout);
+  for (const z of [-0.08, 0.08]) {
+    const nostril = sphere(0.018, 0x8a635b, 6, 4);
+    nostril.position.set(0.96, 0.56, z);
+    g.add(nostril);
+  }
+  for (const z of [-0.11, 0.11]) {
+    const eye = sphere(0.028, 0x2b241d, 6, 4);
+    eye.position.set(0.76, 0.71, z);
+    g.add(eye);
+  }
   for (const z of [-0.16, 0.12]) {
     const ear = cone(0.08, 0.18, 0xf5efe0, 5);
     ear.rotation.z = Math.PI / 2;
-    ear.position.set(0.44, 0.78, z);
+    ear.position.set(0.56, 0.82, z);
     g.add(ear);
   }
   for (const z of [-0.12, 0.1]) {
     const horn = cone(0.045, 0.16, 0xf2ddb5, 6);
     horn.rotation.z = -Math.PI / 2;
-    horn.position.set(0.47, 0.86, z);
+    horn.position.set(0.58, 0.91, z);
     g.add(horn);
   }
-  for (const [x, z] of [[-0.32, -0.22], [-0.32, 0.22], [0.28, -0.22], [0.28, 0.22]]) {
-    const leg = box(0.11, 0.34, 0.11, 0x3f332d);
-    leg.position.set(x, 0.17, z);
+  for (const [x, z] of [[-0.42, -0.24], [-0.42, 0.24], [0.34, -0.24], [0.34, 0.24]]) {
+    const leg = box(0.13, 0.36, 0.13, 0x3f332d);
+    leg.position.set(x, 0.18, z);
     g.add(leg);
   }
+  const tail = cylinder(0.018, 0.34, 0x3f332d, 6);
+  tail.rotation.z = -0.55;
+  tail.position.set(-0.74, 0.62, 0.02);
+  g.add(tail);
+  const tailTip = sphere(0.055, 0x2f2a27, 6, 4);
+  tailTip.position.set(-0.84, 0.49, 0.02);
+  g.add(tailTip);
   return g;
 }
 
@@ -2506,9 +2773,10 @@ function plantSeedAt(crop, slot) {
   if (!slot || ITEMS[slot.id]?.category !== "semente") return toast("Selecione uma semente.");
   if (!crop || crop.seedId) return toast("Você precisa de solo arado.");
   if (Math.hypot(crop.x - player.position.x, crop.z - player.position.z) > 1.7) return toast("Você precisa chegar mais perto.");
+  const wasWatered = Boolean(crop.watered);
   crop.seedId = slot.id;
   crop.growth = 0;
-  crop.watered = state.weather === "rain";
+  crop.watered = wasWatered || state.weather === "rain";
   crop.ready = false;
   removeItemFromSlot(selectedSlot, 1);
   spawnParticles("dirt", new THREE.Vector3(crop.x, 0.4, crop.z));
@@ -4416,22 +4684,43 @@ function movePlayer(dt) {
       direction.set(0, 0, 0);
     } else direction.normalize();
   }
-  if (direction.lengthSq() === 0) return;
+  if (direction.lengthSq() === 0) {
+    resetSustainedMove();
+    return;
+  }
+  const moveDirection = direction.clone();
+  const speedBoost = sustainedMoveMultiplier(moveDirection, dt);
   const standingCrop = cropAt(worldToTile(player.position.x, player.position.z));
-  const speed = standingCrop?.seedId ? 2.35 : 2.7;
-  const next = player.position.clone().add(direction.multiplyScalar(speed * dt));
+  const speed = (standingCrop?.seedId ? 2.35 : 2.7) * speedBoost;
+  const next = player.position.clone().add(moveDirection.clone().multiplyScalar(speed * dt));
   if (!collides(next.x, next.z)) {
     player.position.x = next.x;
     player.position.z = next.z;
     state.player = { x: player.position.x, z: player.position.z };
-    player.rotation.y = Math.atan2(direction.x, direction.z);
-  } else if (state.mode === "farm" && tryPushAnimal(next.x, next.z, direction)) {
+    player.rotation.y = Math.atan2(moveDirection.x, moveDirection.z);
+  } else if (state.mode === "farm" && tryPushAnimal(next.x, next.z, moveDirection)) {
     if (!collides(next.x, next.z)) {
       player.position.x = next.x;
       player.position.z = next.z;
       state.player = { x: player.position.x, z: player.position.z };
     }
   }
+}
+
+function resetSustainedMove() {
+  sustainedMoveDirection = null;
+  sustainedMoveTime = 0;
+}
+
+function sustainedMoveMultiplier(direction, dt) {
+  if (!sustainedMoveDirection) {
+    sustainedMoveDirection = direction.clone();
+    sustainedMoveTime = 0;
+    return 1;
+  }
+  sustainedMoveDirection.copy(direction);
+  sustainedMoveTime += dt;
+  return sustainedMoveTime >= 2 ? 1.5 : 1;
 }
 
 function tryPushAnimal(x, z, direction) {
@@ -4469,6 +4758,75 @@ function animalBlocked(animal, x, z) {
   return state.animals.some((other) => other.id !== animal.id && Math.hypot(other.x - x, other.z - z) < (other.type === "cow" ? 0.8 : 0.55));
 }
 
+function updateAnimalWander(dt) {
+  if (!state || isPaused || overviewMode || state.mode !== "farm") return;
+  for (const animal of state.animals) {
+    animal.wanderTimer = Math.max(0, Number(animal.wanderTimer || 0) - dt);
+    if (!animal.wanderTarget && animal.wanderTimer <= 0) {
+      animal.wanderTarget = chooseAnimalWanderTarget(animal);
+      animal.wanderTimer = animal.wanderTarget ? 0 : 1.8 + Math.random() * 2.2;
+    }
+    if (!animal.wanderTarget) continue;
+    const dx = animal.wanderTarget.x - animal.x;
+    const dz = animal.wanderTarget.z - animal.z;
+    const dist = Math.hypot(dx, dz);
+    if (dist < 0.06) {
+      animal.x = animal.wanderTarget.x;
+      animal.z = animal.wanderTarget.z;
+      animal.wanderTarget = null;
+      animal.wanderTimer = 2.4 + Math.random() * 4.2;
+      syncAnimalTransform(animal, null, false);
+      continue;
+    }
+    const speed = animal.type === "cow" ? 0.24 : 0.34;
+    const step = Math.min(dist, speed * dt);
+    const nx = animal.x + (dx / dist) * step;
+    const nz = animal.z + (dz / dist) * step;
+    if (animalBlocked(animal, nx, nz) || Math.hypot(nx - animal.homeX, nz - animal.homeZ) > animalWanderRadius(animal)) {
+      animal.wanderTarget = null;
+      animal.wanderTimer = 1.6 + Math.random() * 2.8;
+      continue;
+    }
+    animal.x = nx;
+    animal.z = nz;
+    syncAnimalTransform(animal, { x: dx / dist, z: dz / dist }, true);
+  }
+}
+
+function chooseAnimalWanderTarget(animal) {
+  const radius = animalWanderRadius(animal);
+  for (let i = 0; i < 8; i += 1) {
+    const angle = Math.random() * Math.PI * 2;
+    const distance = 0.35 + Math.random() * (radius * 0.42);
+    const x = animal.x + Math.cos(angle) * distance;
+    const z = animal.z + Math.sin(angle) * distance;
+    if (Math.hypot(x - animal.homeX, z - animal.homeZ) > radius) continue;
+    if (!animalBlocked(animal, x, z)) return { x, z };
+  }
+  return null;
+}
+
+function animalWanderRadius(animal) {
+  return animal.type === "cow" ? 2.4 : 1.9;
+}
+
+function syncAnimalTransform(animal, direction, walking) {
+  const group = objects.get(animal.id);
+  const collision = collisions.find((c) => c.id === animal.id);
+  if (collision) {
+    collision.x = animal.x;
+    collision.z = animal.z;
+  }
+  if (!group) return;
+  group.position.x = animal.x;
+  group.position.z = animal.z;
+  group.userData.walking = walking;
+  if (direction) {
+    const baseRotation = Math.atan2(direction.x, direction.z);
+    group.userData.targetRotationY = animal.type === "cow" ? baseRotation - Math.PI / 2 : baseRotation;
+  }
+}
+
 function collides(x, z) {
   const b = farmBounds();
   if (x < b.minX + 0.35 || x > b.maxX - 0.35 || z < b.minZ + 0.35 || z > b.maxZ - 0.35) return true;
@@ -4489,6 +4847,7 @@ function animate(time) {
   lastTime = time;
   resize();
   movePlayer(dt);
+  updateAnimalWander(dt);
   animateScene(time);
   updateTargetMarker();
   updateActionButton();
@@ -4567,8 +4926,12 @@ function animateScene(time) {
   for (const animal of state?.animals || []) {
     const group = objects.get(animal.id);
     if (!group) continue;
-    group.rotation.y = Math.sin(time * 0.0015 + animal.x) * 0.16;
-    group.position.y = Math.sin(time * 0.003 + animal.z) * 0.025;
+    const targetRotation = group.userData.targetRotationY ?? group.rotation.y;
+    const rotationDelta = Math.atan2(Math.sin(targetRotation - group.rotation.y), Math.cos(targetRotation - group.rotation.y));
+    group.rotation.y += rotationDelta * 0.12;
+    const sway = Math.sin(time * (group.userData.walking ? 0.006 : 0.002) + animal.x);
+    group.rotation.z = sway * (group.userData.walking ? 0.055 : 0.025);
+    group.position.y = group.userData.walking ? Math.abs(Math.sin(time * 0.009 + animal.z)) * 0.035 : Math.sin(time * 0.003 + animal.z) * 0.018;
   }
 }
 
@@ -4875,6 +5238,7 @@ function setupJoystick() {
   const center = () => {
     ui.stick.style.transform = "translate(-50%, -50%)";
     moveInput.set(0, 0, 0);
+    resetSustainedMove();
     joystickPointer = null;
   };
   ui.joystick.addEventListener("pointerdown", (event) => {
@@ -4924,6 +5288,7 @@ function handleKeyUp(event) {
   if ((key === "s" || event.key === "ArrowDown") && moveInput.z > 0) moveInput.z = 0;
   if ((key === "a" || event.key === "ArrowLeft") && moveInput.x < 0) moveInput.x = 0;
   if ((key === "d" || event.key === "ArrowRight") && moveInput.x > 0) moveInput.x = 0;
+  if (moveInput.lengthSq() === 0) resetSustainedMove();
 }
 
 async function boot() {
