@@ -663,8 +663,7 @@ function loadGame(version = "recent", slot = activeSaveSlot) {
   selectedSlot = state.selectedSlot || 0;
   const loadedActiveSelection = state.activeSelection === "item" ? "item" : "tool";
   setTool(selectedTool, true);
-  activeSelection = loadedActiveSelection;
-  state.activeSelection = activeSelection;
+  setActiveSelection(loadedActiveSelection);
   rebuildWorld();
   applyWeather(state.weather);
   closeScreens();
@@ -1920,15 +1919,28 @@ function renderInventory() {
   for (let i = 0; i < visibleSlots; i += 1) {
     const button = renderSlot(state.inventory[i], { container: "inventory", index: i, selected: activeSelection === "item" && selectedSlot === i });
     button.addEventListener("click", () => {
-      selectedSlot = i;
-      activeSelection = "item";
-      state.selectedSlot = selectedSlot;
-      state.activeSelection = activeSelection;
-      renderInventory();
-      updateActionButton();
+      selectInventorySlot(i);
     });
     ui.inventory.append(button);
   }
+}
+
+function setActiveSelection(mode) {
+  activeSelection = mode === "item" ? "item" : "tool";
+  if (state) state.activeSelection = activeSelection;
+  ui.toolButton?.classList.toggle("is-selected", activeSelection === "tool");
+  ui.toolRadial?.querySelectorAll("[data-tool]").forEach((button) => {
+    button.classList.toggle("is-selected", activeSelection === "tool" && button.dataset.tool === selectedTool);
+  });
+  renderInventory();
+  updateActionButton();
+}
+
+function selectInventorySlot(index) {
+  selectedSlot = index;
+  if (state) state.selectedSlot = selectedSlot;
+  ui.toolRadial?.classList.remove("is-open");
+  setActiveSelection("item");
 }
 
 function renderSlot(stack, meta) {
@@ -2367,7 +2379,7 @@ function actionAtTile(tile) {
   }
   if (selectedTool === "hoe") {
     if (currentCrop) return toast("Ação inválida.");
-    return tillSoilAt(tile, { allowFallback: true });
+    return tillSoilAt(tile);
   }
   if (selectedTool === "water") {
     if (!currentCrop) return toast("Não há solo ou planta para regar.");
@@ -2393,9 +2405,6 @@ function actionAtTile(tile) {
 function quickAction() {
   if (!state || isPaused || overviewMode) return;
   ui.toolRadial.classList.remove("is-open");
-  const harvestTarget = nearestReadyCrop(1.7);
-  if (harvestTarget) return harvestCrop(harvestTarget);
-
   const slot = selectedItem();
   const tile = selectedCropTile();
   const crop = cropAt(tile);
@@ -2431,6 +2440,8 @@ function quickAction() {
     return plantSeedAt(crop, slot);
   }
   if (slot && ITEMS[slot.id]?.category === "semente" && !crop) return toast("Você precisa de solo arado.");
+  const harvestTarget = nearestReadyCrop(1.7);
+  if (harvestTarget) return harvestCrop(harvestTarget);
   if (crop?.ready) return harvestCrop(crop);
   if (activeSelection === "tool" && ["axe", "pickaxe", "scythe"].includes(selectedTool)) return toast("Nada para fazer aqui.");
   toast("Nada para fazer aqui.");
@@ -3190,12 +3201,8 @@ function renderActiveViews() {
   for (let i = 0; i < state.inventory.length; i += 1) {
     const slot = renderSlot(state.inventory[i], { container: "inventory", index: i, selected: activeSelection === "item" && selectedSlot === i });
     slot.addEventListener("click", () => {
-      selectedSlot = i;
-      activeSelection = "item";
-      state.selectedSlot = selectedSlot;
-      state.activeSelection = activeSelection;
+      selectInventorySlot(i);
       renderActiveViews();
-      updateActionButton();
     });
     invGrid.append(slot);
   }
@@ -3799,17 +3806,10 @@ function generateExpansionArea(dir) {
 
 function setTool(tool, silent = false) {
   selectedTool = tool;
-  activeSelection = "tool";
   state.selectedTool = tool;
-  state.activeSelection = activeSelection;
   ui.toolRadial.classList.remove("is-open");
   ui.toolButton.innerHTML = TOOL_ICONS[tool] || "";
-  ui.toolRadial.querySelectorAll("[data-tool]").forEach((button) => {
-    button.classList.toggle("is-selected", button.dataset.tool === tool);
-  });
-  ui.toolButton.innerHTML = TOOL_ICONS[tool] || "";
-  renderInventory();
-  updateActionButton();
+  setActiveSelection("tool");
   if (!silent) toast(`Ferramenta: ${TOOL_LABELS[tool] || "Ferramenta"}`);
 }
 
@@ -4417,7 +4417,8 @@ function movePlayer(dt) {
     } else direction.normalize();
   }
   if (direction.lengthSq() === 0) return;
-  const speed = cropAt(worldToTile(player.position.x, player.position.z)) ? 2.1 : 2.7;
+  const standingCrop = cropAt(worldToTile(player.position.x, player.position.z));
+  const speed = standingCrop?.seedId ? 2.35 : 2.7;
   const next = player.position.clone().add(direction.multiplyScalar(speed * dt));
   if (!collides(next.x, next.z)) {
     player.position.x = next.x;
@@ -4548,7 +4549,7 @@ function updateTargetMarker() {
     if (selectedTool === "water" && crop) target = { x: crop.x, z: crop.z, dist: Math.hypot(crop.x - player.position.x, crop.z - player.position.z) };
     if (selectedTool === "hoe") target = { x: tile.x, z: tile.z, dist: Math.hypot(tile.x - player.position.x, tile.z - player.position.z) };
   }
-  if (crop?.ready) target = { x: crop.x, z: crop.z, dist: Math.hypot(crop.x - player.position.x, crop.z - player.position.z) };
+  if (activeSelection !== "tool" && crop?.ready) target = { x: crop.x, z: crop.z, dist: Math.hypot(crop.x - player.position.x, crop.z - player.position.z) };
   if (!target) return targetMarker.visible = false;
   const targetDist = target.dist ?? Math.hypot(target.x - player.position.x, target.z - player.position.z);
   if (!valid) valid = targetDist <= 1.55;
@@ -4741,6 +4742,7 @@ function initUi() {
   ui.toolButton.addEventListener("click", (event) => {
     event.stopPropagation();
     if (!state || isPaused || overviewMode) return;
+    setActiveSelection("tool");
     ui.toolRadial.classList.toggle("is-open");
   });
   ui.toolRadial.querySelectorAll("[data-tool]").forEach((button) => button.addEventListener("click", () => setTool(button.dataset.tool)));
