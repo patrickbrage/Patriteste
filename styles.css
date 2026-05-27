@@ -202,6 +202,11 @@ input {
   box-shadow: 0 12px 26px rgba(70, 51, 25, 0.2), inset 0 -4px 0 rgba(142, 91, 41, 0.18);
 }
 
+.tool-button.is-selected {
+  outline: 3px solid rgba(91, 170, 90, 0.72);
+  box-shadow: 0 0 0 4px rgba(235, 255, 207, 0.58), 0 12px 26px rgba(70, 51, 25, 0.2), inset 0 -4px 0 rgba(142, 91, 41, 0.18);
+}
+
 .action-button {
   background: linear-gradient(180deg, #fff5d8, #ffd978);
   border-color: rgba(170, 111, 45, 0.42);

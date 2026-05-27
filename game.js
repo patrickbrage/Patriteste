@@ -4806,6 +4806,7 @@ function chooseNewGameSlot(slot) {
       ui.creationScreen.classList.add("is-active");
     });
   } else {
+    closeModal(false);
     ui.mainMenu.classList.remove("is-active");
     ui.creationScreen.classList.add("is-active");
   }
