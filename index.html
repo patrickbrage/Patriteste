@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Patrickolândia</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <canvas id="game" aria-label="Patrickolândia"></canvas>
+      <div class="weather-layer" id="weatherLayer" aria-hidden="true"></div>
+      <div class="float-layer" id="floatLayer" aria-hidden="true"></div>
+
+      <section class="orientation-warning" aria-live="polite">
+        Para jogar melhor, vire o celular na horizontal.
+      </section>
+
+      <section class="hud" id="hud" aria-label="Informações da fazenda">
+        <div class="farm-card">
+          <p id="farmNameLabel">Patrickolândia</p>
+          <strong id="dateLabel">Dia 1</strong>
+          <small id="weatherLabel">Ensolarado</small>
+        </div>
+        <div class="money-card" aria-label="Dinheiro">
+          <span aria-hidden="true"></span>
+          <strong id="moneyLabel">R$17</strong>
+        </div>
+        <button class="round-button" id="overviewButton" type="button" aria-label="Visão geral">⌕</button>
+        <button class="round-button" id="pauseButton" type="button" aria-label="Pausar">Ⅱ</button>
+      </section>
+
+      <section class="interaction-icons" id="interactionIcons" aria-label="Interações"></section>
+
+      <section class="right-tools" aria-label="Ferramentas">
+        <button class="tool-button" id="toolButton" type="button" aria-label="Ferramentas"></button>
+        <button class="tool-button action-button" id="quickActionButton" type="button" aria-label="Ação">Ação</button>
+        <button class="zoom-button" id="zoomInButton" type="button" aria-label="Aproximar">+</button>
+        <button class="zoom-button" id="zoomOutButton" type="button" aria-label="Afastar">−</button>
+      </section>
+
+      <section class="tool-radial" id="toolRadial" aria-label="Selecionar ferramenta">
+        <button data-tool="hoe" type="button" aria-label="Arar"></button>
+        <button data-tool="water" type="button" aria-label="Regar"></button>
+        <button data-tool="axe" type="button" aria-label="Machado"></button>
+        <button data-tool="pickaxe" type="button" aria-label="Picareta"></button>
+        <button data-tool="scythe" type="button" aria-label="Foice"></button>
+        <button data-tool="build" type="button" aria-label="Construir"></button>
+      </section>
+
+      <section class="bottom-ui" aria-label="Controles">
+        <div class="joystick" id="joystick" aria-label="Joystick">
+          <div class="stick" id="stick"></div>
+        </div>
+        <div class="inventory-panel">
+          <div class="resource-row">
+            <span id="woodLabel">Madeira 0/20</span>
+            <span id="stoneLabel">Pedra 0/20</span>
+            <span id="hayLabel">Feno 0/500</span>
+          </div>
+          <div class="inventory" id="inventory"></div>
+          <button class="expand-inventory" id="expandInventory" type="button">⌃</button>
+        </div>
+      </section>
+
+      <section class="toast-layer" id="toastLayer" aria-live="polite"></section>
+
+      <section class="screen main-menu is-active" id="mainMenu" aria-label="Menu principal">
+        <div class="menu-panel">
+          <p class="eyebrow">Bem-vindo a</p>
+          <h1>Patrickolândia</h1>
+          <button id="newGameButton" type="button">Novo Jogo</button>
+          <button id="loadGameButton" type="button">Carregar Jogo</button>
+          <button id="settingsButton" type="button">Configurações</button>
+          <button id="exitMenuButton" type="button">Sair</button>
+        </div>
+      </section>
+
+      <section class="screen creation-screen" id="creationScreen" aria-label="Novo jogo">
+        <form class="creation-panel" id="creationForm">
+          <h2>Novo Jogo</h2>
+          <label>
+            Nome da fazenda
+            <input id="farmNameInput" maxlength="24" value="Fazenda do Patrick" />
+          </label>
+          <label>
+            Nome do personagem
+            <input id="characterNameInput" maxlength="20" value="Patrick" />
+          </label>
+          <div class="creator-grid">
+            <fieldset>
+              <legend>Pele</legend>
+              <button class="swatch skin is-active" data-create="skin" data-value="0" type="button"></button>
+              <button class="swatch skin tone-2" data-create="skin" data-value="1" type="button"></button>
+              <button class="swatch skin tone-3" data-create="skin" data-value="2" type="button"></button>
+            </fieldset>
+            <fieldset>
+              <legend>Cabelo</legend>
+              <button class="swatch hair is-active" data-create="hair" data-value="0" type="button"></button>
+              <button class="swatch hair color-2" data-create="hair" data-value="1" type="button"></button>
+              <button class="swatch hair color-3" data-create="hair" data-value="2" type="button"></button>
+            </fieldset>
+            <fieldset>
+              <legend>Camisa</legend>
+              <button class="swatch shirt is-active" data-create="shirt" data-value="0" type="button"></button>
+              <button class="swatch shirt color-2" data-create="shirt" data-value="1" type="button"></button>
+              <button class="swatch shirt color-3" data-create="shirt" data-value="2" type="button"></button>
+            </fieldset>
+            <fieldset>
+              <legend>Calça</legend>
+              <button class="swatch pants is-active" data-create="pants" data-value="0" type="button"></button>
+              <button class="swatch pants color-2" data-create="pants" data-value="1" type="button"></button>
+            </fieldset>
+            <fieldset>
+              <legend>Sapato</legend>
+              <button class="swatch shoes is-active" data-create="shoes" data-value="0" type="button"></button>
+              <button class="swatch shoes color-2" data-create="shoes" data-value="1" type="button"></button>
+              <label class="barefoot"><input id="barefootInput" type="checkbox" /> Descalço</label>
+            </fieldset>
+          </div>
+          <div class="form-actions">
+            <button type="button" id="cancelCreation">Voltar</button>
+            <button type="submit">Começar</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="modal" id="modal" aria-live="polite"></section>
+    </main>
+
+    <script defer src="game.js?v=github-pages-ready-1"></script>
+  </body>
+</html>
