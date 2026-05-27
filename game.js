@@ -267,6 +267,7 @@ let player;
 const playerParts = {};
 let moveInput;
 let autoPath = [];
+let pendingAutoInteraction = null;
 let zoom = 1;
 let sunLight;
 let hemiLight;
@@ -4249,7 +4250,7 @@ function handleGroundTap(event) {
   const interactionTarget = interactionAtPoint(point);
   if (interactionTarget) {
     const pos = interactionTarget.group?.position || interactionTarget.object || interactionTarget;
-    if (Math.hypot(player.position.x - pos.x, player.position.z - pos.z) > 1.8) return toast("Você precisa chegar mais perto.");
+    if (Math.hypot(player.position.x - pos.x, player.position.z - pos.z) > 1.8) return walkToInteraction(interactionTarget);
     return interact(interactionTarget);
   }
   const clickedTile = worldToTile(point.x, point.z);
@@ -4270,7 +4271,16 @@ function handleGroundTap(event) {
   if (state.mode === "farm" && activeSelection === "tool" && selectedTool === "build") return toast("Selecione um item de construção.");
   const nearbyObject = state.mode === "farm" ? nearestObjectTo(point, 0.65) : null;
   if (activeSelection === "tool" && nearbyObject && tryToolOnObject(nearbyObject)) return;
+  pendingAutoInteraction = null;
   autoPath = buildPath(player.position, point);
+}
+
+function walkToInteraction(target) {
+  if (!target?.group) return toast("Não consegui chegar lá.");
+  const path = buildPath(player.position, target.group.position);
+  if (!path.length) return;
+  pendingAutoInteraction = target;
+  autoPath = path;
 }
 
 function interactionAtPoint(point) {
@@ -4674,6 +4684,7 @@ function movePlayer(dt) {
   let direction = new THREE.Vector3();
   if (moveInput.lengthSq() > 0) {
     autoPath = [];
+    pendingAutoInteraction = null;
     direction.copy(moveInput).normalize();
   } else if (autoPath.length) {
     const target = autoPath[0];
@@ -4682,6 +4693,7 @@ function movePlayer(dt) {
     if (direction.length() < 0.12) {
       autoPath.shift();
       direction.set(0, 0, 0);
+      if (!autoPath.length) finishPendingAutoInteraction();
     } else direction.normalize();
   }
   if (direction.lengthSq() === 0) {
@@ -4705,6 +4717,17 @@ function movePlayer(dt) {
       state.player = { x: player.position.x, z: player.position.z };
     }
   }
+}
+
+function finishPendingAutoInteraction() {
+  if (!pendingAutoInteraction || isPaused || overviewMode) return;
+  const target = pendingAutoInteraction;
+  pendingAutoInteraction = null;
+  const pos = target.group?.position || target.object || target;
+  if (!pos) return;
+  if (Math.hypot(player.position.x - pos.x, player.position.z - pos.z) > 1.9) return toast("Você precisa chegar mais perto.");
+  if (target.type !== "animal" && !isInteractionAvailable(target)) return;
+  interact(target);
 }
 
 function resetSustainedMove() {
